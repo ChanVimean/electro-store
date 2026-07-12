@@ -25,6 +25,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/product" element={<Product /> } />
         <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/product/:id" element={<Contact />} /> */}
       </Routes>
 
       {/* Dynamic Routes */}

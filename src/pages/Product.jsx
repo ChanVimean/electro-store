@@ -86,6 +86,7 @@
 
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/api";
+import { FaStar } from "react-icons/fa";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -108,12 +109,26 @@ const Product = () => {
       : products.filter((p) => p.category === selectedCategory);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50 px-6 py-8 space-y-6">
+      {/* Header */}
       <section>
-        <ul className="flex gap-4 overflow-x-auto">
+        <h1 className="text-2xl font-bold text-gray-800">Products</h1>
+        <p className="text-sm text-gray-500">Browse our latest collection</p>
+      </section>
+
+      {/* Categories */}
+      <section>
+        <ul className="flex gap-3 overflow-x-auto pb-2">
           {categories.map((category) => (
             <li key={category}>
-              <button onClick={() => setSelectedCategory(category)}>
+              <button
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium capitalize whitespace-nowrap transition-colors hover:cursor-pointer ${
+                  selectedCategory === category
+                    ? "bg-amber-600 text-white shadow"
+                    : "bg-white text-gray-700 border border-gray-200 hover:bg-amber-100 hover:text-amber-600"
+                }`}
+              >
                 {category}
               </button>
             </li>
@@ -121,16 +136,48 @@ const Product = () => {
         </ul>
       </section>
 
+      {/* Products */}
       <section className="">
-        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        {/* <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"> */}
+        <ul className="columns columns-2 md:columns-3 lg:columns-5 gap-4">
           {/* {products.map((product, index) => ( */}
           {filteredProducts.map((product, index) => (
-            <li key={index} className="p-4 rounded-xl shadow">
-              <img src={product.image} alt={product.title} />
-              <h2>{product.title}</h2>
-              <p>{product.category}</p>
-              <p>${product.price}</p>
-              <p>{product.description}</p>
+            <li
+              key={index}
+              className="group mb-4 flex flex-col bg-white rounded-xl shadow hover:shadow-lg transition-shadow overflow-hidden"
+            >
+              {/* Image */}
+              <div className="p-6">
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="w-full object-contain group-hover:scale-105 transition-transform"
+                />
+              </div>
+
+              {/* Info */}
+              <div className="flex flex-col flex-1 p-4 space-y-2 border-t border-gray-100">
+                <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">
+                  {product.category}
+                </p>
+                <h2 className="font-semibold text-gray-800 line-clamp-2">
+                  {product.title}
+                </h2>
+                <p className="text-sm text-gray-500 line-clamp-2">
+                  {product.description}
+                </p>
+                <div className="flex justify-between items-center mt-auto pt-2">
+                  <p className="text-lg font-bold text-gray-900">
+                    ${product.price}
+                  </p>
+                  <p className="flex items-center space-x-1 text-sm text-gray-600">
+                    <FaStar className="text-amber-400" />
+
+                    <span>{product.rating.rate}</span>
+                    <span className="text-gray-400">({product.rating.count})</span>
+                  </p>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
@@ -148,6 +195,10 @@ export default Product;
 //     "price": 0.1,
 //     "description": "string",
 //     "category": "string",
-//     "image": "http://example.com"
+//     "image": "http://example.com",
+//     "rating": {
+//       "rate": 3.9,
+//       "count": 120
+//     }
 //   }
 // ]
