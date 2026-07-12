@@ -19,7 +19,7 @@ export const products = [
     id: "1",
     title: "Laptop Rog Strix G16",
     price: 1299.99,
-    stock: 10,
+    stock: 10, // Quantity
     sold: 50,
     category: "laptop",
     description: "Gaming laptop with 16-inch display and RGB keyboard.",

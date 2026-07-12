@@ -1,5 +1,5 @@
-import { FaCartPlus } from "react-icons/fa";
 import { products } from "../data/products";
+import ProductCard from "../components/ProductCard";
 
 const Product = () => {
   // Temporary Categories
@@ -42,7 +42,7 @@ const Product = () => {
 
       {/* 3. Content */}
       {/* Responsive: SM: 2, MD: 3, LG: 4 */}
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {/* <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
           <div key={product.id} className="border rounded p-4 space-y-2">
             <img
@@ -60,7 +60,24 @@ const Product = () => {
             </p>
           </div>
         ))}
+      </section> */}
+
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map((product) => (
+          <ProductCard
+            id={product.id}
+            title={product.title}
+            category={product.category}
+            description={product.description}
+            image={product.image}
+            price={product.price}
+            sold={product.sold}
+            stock={product.stock}
+          />
+        ))}
       </section>
+
+
     </div>
   );
 };
