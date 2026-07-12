@@ -89,20 +89,42 @@ import { getProducts } from "../api/api";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState(["All"]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetch = async () => {
       const data = await getProducts();
       setProducts(data);
+      setCategories(["All", ...new Set(data.map((p) => p.category))]);
     };
+
     fetch();
   }, []);
 
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((p) => p.category === selectedCategory);
+
   return (
     <div>
+      <section>
+        <ul className="flex gap-4 overflow-x-auto">
+          {categories.map((category) => (
+            <li key={category}>
+              <button onClick={() => setSelectedCategory(category)}>
+                {category}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <section className="">
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {products.map((product, index) => (
+          {/* {products.map((product, index) => ( */}
+          {filteredProducts.map((product, index) => (
             <li key={index} className="p-4 rounded-xl shadow">
               <img src={product.image} alt={product.title} />
               <h2>{product.title}</h2>
