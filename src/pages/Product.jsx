@@ -86,12 +86,15 @@
 
 import { useEffect, useState } from "react";
 import { getProducts } from "../api/api";
-import { FaStar } from "react-icons/fa";
+import { FaCartPlus, FaStar } from "react-icons/fa";
+import { useCart } from "../hooks/useCart";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(["All"]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const fetch = async () => {
@@ -170,12 +173,22 @@ const Product = () => {
                   <p className="text-lg font-bold text-gray-900">
                     ${product.price}
                   </p>
-                  <p className="flex items-center space-x-1 text-sm text-gray-600">
-                    <FaStar className="text-amber-400" />
+                  <div className="flex gap-4">
+                    <p className="flex items-center space-x-1 text-sm text-gray-600">
+                      <FaStar className="text-amber-400" />
 
-                    <span>{product.rating.rate}</span>
-                    <span className="text-gray-400">({product.rating.count})</span>
-                  </p>
+                      <span>{product.rating.rate}</span>
+                      <span className="text-gray-400">
+                        ({product.rating.count})
+                      </span>
+                    </p>
+                    <button>
+                      <FaCartPlus
+                        onClick={() => addToCart(product)}
+                        size={16}
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             </li>

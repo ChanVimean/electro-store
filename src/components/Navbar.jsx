@@ -3,9 +3,11 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaRegNewspaper, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router";
+import { useCart } from "../hooks/useCart";
 
 const Navbar = () => {
   // JavaScript
+  const { count } = useCart();
 
   // Obejct:
   // [Key]: [Value]
@@ -61,7 +63,7 @@ const Navbar = () => {
       <ul className="hidden md:flex gap-4 items-center">
         <li className="relative cursor-pointer text-gray-700 hover:text-amber-600 transition-colors">
           <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
-            0
+            {count}
           </span>
           <Link to="/cart">
             <FaShoppingCart size={22} />

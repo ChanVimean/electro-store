@@ -1,13 +1,24 @@
-import { FaTrashAlt, FaImage, FaTicketAlt, FaArrowRight } from "react-icons/fa";
+import { FaTrashAlt, FaTicketAlt, FaArrowRight } from "react-icons/fa";
+import { useCart } from "../hooks/useCart";
 
 const Cart = () => {
+  const {
+    cart,
+    removeFromCart,
+    updateQty,
+    clearCart,
+    total,
+    count,
+  } = useCart();
+
   return (
     <div className="max-w-7xl mx-auto my-10 px-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
       {/* Left: Cart Items */}
       <section className="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-xl font-bold text-gray-800">Shopping Cart</h1>
-          <span className="text-sm text-gray-500">1 item</span>
+          <span className="text-sm text-gray-500">{count} item</span>
+          <button className="text-sm text-red-500" onClick={() => clearCart()}>Clear Cart</button>
         </div>
         <hr className="border-gray-100" />
 
@@ -21,54 +32,61 @@ const Cart = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="grid grid-cols-12 items-center py-4 border-t border-gray-100">
-              {/* Product Detail */}
-              <td className="col-span-6 flex items-center gap-4">
-                <div className="w-16 h-16 shrink-0 rounded-xl bg-amber-50 flex items-center justify-center text-amber-300">
-                  <FaImage size={22} />
-                </div>
-                <div>
-                  <h2 className="font-semibold text-gray-800 leading-tight">
-                    Wireless Headphones
-                  </h2>
-                  <p className="text-sm text-gray-400">Audio</p>
-                </div>
-              </td>
+            {cart.map((item, index) => (
+              <tr
+                key={index}
+                className="grid grid-cols-12 items-center py-4 border-t border-gray-100"
+              >
+                {/* Product Detail */}
+                <td className="col-span-6 flex items-center gap-4">
+                  <div className="w-16 h-16 shrink-0 rounded-xl bg-amber-50 flex items-center justify-center text-amber-300">
+                    <img src={item.image} alt="" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-gray-800 leading-tight">
+                      {item.title}
+                    </h2>
+                    <p className="text-sm text-gray-400">Audio</p>
+                  </div>
+                </td>
 
-              {/* Increment/Decrement */}
-              <td className="col-span-3">
-                <div className="flex items-center justify-center gap-3">
+                {/* Increment/Decrement */}
+                <td className="col-span-3">
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      onClick={() => updateQty(item.id, item.qty - 1)}
+                      className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-600 transition-colors"
+                    >
+                      -
+                    </button>
+                    <p className="w-6 text-center font-medium text-gray-800">
+                      {item.qty}
+                    </p>
+                    <button
+                      onClick={() => updateQty(item.id, item.qty + 1)}
+                      className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-600 transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </td>
+
+                {/* Price */}
+                <td className="col-span-2 text-right font-semibold text-gray-800">
+                  ${item.price}
+                </td>
+
+                {/* Remove from cart */}
+                <td className="col-span-1 flex justify-end">
                   <button
-                    onClick={() => {}}
-                    className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-600 transition-colors"
+                    onClick={() => removeFromCart(item.id)}
+                    className="text-gray-300 hover:text-red-500 transition-colors"
                   >
-                    -
+                    <FaTrashAlt size={16} />
                   </button>
-                  <p className="w-6 text-center font-medium text-gray-800">1</p>
-                  <button
-                    onClick={() => {}}
-                    className="w-7 h-7 flex items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-amber-50 hover:border-amber-300 hover:text-amber-600 transition-colors"
-                  >
-                    +
-                  </button>
-                </div>
-              </td>
-
-              {/* Price */}
-              <td className="col-span-2 text-right font-semibold text-gray-800">
-                $59.99
-              </td>
-
-              {/* Remove from cart */}
-              <td className="col-span-1 flex justify-end">
-                <button
-                  onClick={() => {}}
-                  className="text-gray-300 hover:text-red-500 transition-colors"
-                >
-                  <FaTrashAlt size={16} />
-                </button>
-              </td>
-            </tr>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>
@@ -102,20 +120,20 @@ const Cart = () => {
           <div className="flex flex-col gap-3 text-sm">
             <div className="flex justify-between text-gray-500">
               <span>Subtotal</span>
-              <span className="text-gray-700">$59.99</span>
+              <span className="text-gray-700">$0</span>
             </div>
             <div className="flex justify-between text-gray-500">
               <span>Shipping</span>
-              <span className="text-gray-700">$5.00</span>
+              <span className="text-gray-700">$0</span>
             </div>
             <div className="flex justify-between text-gray-500">
               <span>Tax</span>
-              <span className="text-gray-700">$3.00</span>
+              <span className="text-gray-700">$0</span>
             </div>
             <hr className="border-gray-100 my-1" />
             <div className="flex justify-between text-base font-bold text-gray-800">
               <span>Total</span>
-              <span>$67.99</span>
+              <span>${total}</span>
             </div>
           </div>
 
