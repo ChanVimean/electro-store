@@ -26,7 +26,6 @@ export function ThemeProvider({ children }) {
 
 export default ThemeContext;
 
-
 /// Move this block to src/hooks/useTheme.js
 
 // export const useTheme = () => {

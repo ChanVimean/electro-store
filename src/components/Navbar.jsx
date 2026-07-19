@@ -60,10 +60,12 @@ const Navbar = () => {
       {/* Right */}
       <ul className="hidden md:flex gap-4 items-center">
         <li className="relative cursor-pointer text-gray-700 hover:text-amber-600 transition-colors">
-          <FaShoppingCart size={22} />
           <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">
             0
           </span>
+          <Link to="/cart">
+            <FaShoppingCart size={22} />
+          </Link>
         </li>
         <li className="cursor-pointer text-gray-700 hover:text-amber-600 transition-colors">
           <CgProfile size={30} />

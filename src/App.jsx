@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Product from "./pages/Product";
+import Cart from "./pages/Cart";
 
 // App Router
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/product" element={<Product /> } />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
         {/* <Route path="/product/:id" element={<Contact />} /> */}
       </Routes>
 
